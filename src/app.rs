@@ -66,8 +66,7 @@ pub struct App {
 
 impl App {
     pub fn new() -> Self {
-        let mut sys = System::new_all();
-        sys.refresh_all();
+        let sys = System::new_all();
         let disks = Disks::new_with_refreshed_list();
         let networks = Networks::new_with_refreshed_list();
 
@@ -114,11 +113,10 @@ impl App {
 
     fn refresh(&mut self) {
         // CPU
-        let usages: Vec<f32> = self.sys.cpus().iter().map(|c| c.cpu_usage()).collect();
-        self.cpu_usage = usages.clone();
-        for (i, usage) in usages.iter().enumerate() {
+        self.cpu_usage = self.sys.cpus().iter().map(|c| c.cpu_usage()).collect();
+        for i in 0..self.cpu_usage.len() {
             if i < self.cpu_history.len() {
-                push_history(&mut self.cpu_history[i], *usage as f64);
+                push_history(&mut self.cpu_history[i], self.cpu_usage[i] as f64);
             }
         }
 

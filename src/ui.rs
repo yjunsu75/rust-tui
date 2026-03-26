@@ -419,7 +419,7 @@ fn draw_processes(f: &mut Frame, app: &App, area: Rect) {
     .style(header_style)
     .height(1);
 
-    let visible_rows = area.height.saturating_sub(4) as usize; // borders + header
+    let visible_rows = area.height.saturating_sub(3) as usize; // borders(2) + header(1)
     let scroll = app.process_scroll.min(
         app.processes.len().saturating_sub(visible_rows),
     );

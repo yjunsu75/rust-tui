@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(cargo init:*)",
-      "Bash(cargo build:*)"
+      "Bash(cargo build:*)",
+      "Bash(cargo doc:*)",
+      "Bash(sed 's/tab: Tab::Overview/tab: Tab::Processes/' src/app.rs)",
+      "Read(//tmp/**)",
+      "Bash(tasklist)",
+      "Bash(taskkill /F /PID 1620)",
+      "Bash(rmdir:*)"
     ]
   }
 }

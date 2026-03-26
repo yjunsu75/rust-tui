@@ -5,7 +5,7 @@ use std::{io, time::Duration};
 
 use app::App;
 use crossterm::{
-    event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyModifiers},
+    event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind, KeyModifiers},
     execute,
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
@@ -45,6 +45,9 @@ async fn run<B: ratatui::backend::Backend>(
 
         if event::poll(Duration::from_millis(TICK_MS))? {
             if let Event::Key(key) = event::read()? {
+                if key.kind != KeyEventKind::Press {
+                    continue;
+                }
                 match (key.code, key.modifiers) {
                     (KeyCode::Char('q'), _)
                     | (KeyCode::Char('c'), KeyModifiers::CONTROL) => return Ok(()),
